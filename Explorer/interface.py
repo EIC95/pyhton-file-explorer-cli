@@ -1,5 +1,6 @@
 from pathlib import Path
 import datetime
+import os
 
 def format_size(size_in_bytes):
     for unit in ['B', 'Ko', 'Mo', 'Go']:
@@ -11,21 +12,34 @@ def format_size(size_in_bytes):
 def format_date(timestamp):
     return datetime.datetime.fromtimestamp(timestamp).strftime("%d/%m/%Y %H:%M")
 
-def afficher(path):
-    repertoire = Path(path)
+def clear_screen():
+    if os.name == "nt":
+        os.system("cls")
+    else:
+        os.system("clear")
 
-    print(f"{'Nom':<33} {'Type':<10} {'Taille':<10} {'Modifié le'}")
-    print("=" * 72)
+def afficher(path , selected_item):
+    files = list(Path(path).iterdir())
 
-    for item in repertoire.iterdir():
+    clear_screen()
+    print(f"{'...':<2} {'Nom':<33} {'Type':<10} {'Taille':<10} {'Modifié le'}")
+    print("=" * 75)
+
+    for index, item in enumerate(files):
         if item.is_file():
-            icon = "📄"
             file_type = "Fichier"
         else:
             file_type = "Dossier"
-            icon = "📁"
         size = format_size(item.stat().st_size) if item.is_file() else "—"
         mod_date = format_date(item.stat().st_mtime)
 
-        print(f"{icon} {item.name:<30} {file_type:<10} {size:<10} {mod_date}")
+        if index == selected_item:
+            print(f" *  {item.name:<30} {file_type:<10} {size:<10} {mod_date}")
+        else:
+            print(f"    {item.name:<30} {file_type:<10} {size:<10} {mod_date}")
+
+    return files
+
+
+
 

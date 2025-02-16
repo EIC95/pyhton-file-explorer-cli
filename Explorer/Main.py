@@ -1,4 +1,3 @@
-from Explorer.interface import afficher
+from Explorer.navigations import naviguer
 
-afficher('C:/')
-
+naviguer('C:/')
