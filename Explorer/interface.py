@@ -18,10 +18,12 @@ def clear_screen():
     else:
         os.system("clear")
 
-def afficher(path , selected_item):
+def afficher(path , selected_item , message):
     files = list(Path(path).iterdir())
 
     clear_screen()
+    print('chemin : ' + path)
+    print("=" * 75)
     print(f"{'...':<2} {'Nom':<33} {'Type':<10} {'Taille':<10} {'Modifié le'}")
     print("=" * 75)
 
@@ -37,6 +39,15 @@ def afficher(path , selected_item):
             print(f" *  {item.name:<30} {file_type:<10} {size:<10} {mod_date}")
         else:
             print(f"    {item.name:<30} {file_type:<10} {size:<10} {mod_date}")
+
+    print("=" * 75)
+    print('Appuyez shift + C pour copier')
+    print('Appuyez shift + V pour coller')
+    print('Appuyez shift + X puis deplacez vous dans le dossier cible et appuyer shift + V pour déplacer')
+    print('Appuyez shift + R pour renomer')
+    print('Appuyez shift + D pour supprimer')
+    print('='*75)
+    print(message)
 
     return files
 
