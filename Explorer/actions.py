@@ -1,6 +1,7 @@
 import shutil
 import os
 import ctypes
+from pathlib import Path
 
 
 def paste(path, destination, action):
@@ -55,6 +56,7 @@ def rename(path):
         os.rename(path, new_path)
         return 'renommé'
 
+
     except FileNotFoundError as e:
         return f"Erreur : {e}"
     except FileExistsError:
@@ -65,3 +67,39 @@ def rename(path):
         return f"Erreur : {e}"
     except Exception as e:
         return f"Erreur inattendue : {e}"
+def sort_by_type(path):
+    try:
+        files = [f for f in Path(path).iterdir() if f.exists()]
+        sorted_files = sorted(files, key=lambda f: (f.is_file(), f.suffix.lower()), reverse=True)
+        return sorted_files, 'Trié par type'
+    except Exception as e:
+        return [], f"Erreur : {e}"
+
+def sort_by_date(path):
+    try:
+        files = []
+        for f in Path(path).iterdir():
+            try:
+                files.append(f)  # On stocke juste le fichier, pas un tuple
+            except Exception:
+                continue
+        sorted_files = sorted(files, key=lambda f: f.stat().st_mtime, reverse=True)
+        return sorted_files, 'Trié par date'
+    except Exception as e:
+        return [], f"Erreur : {e}"
+
+def sort_by_size(path):
+    try:
+        files = []
+        for f in Path(path).iterdir():
+            try:
+                files.append(f)  # On stocke juste le fichier, pas un tuple
+            except Exception:
+                continue
+        sorted_files = sorted(files, key=lambda f: f.stat().st_size if f.is_file() else 0, reverse=True)
+        return sorted_files, 'Trié par taille'
+    except Exception as e:
+        return [], f"Erreur : {e}"
+
+
+

@@ -1,4 +1,3 @@
-from pathlib import Path
 import datetime
 import os
 
@@ -18,8 +17,7 @@ def clear_screen():
     else:
         os.system("clear")
 
-def afficher(path , selected_item , message):
-    files = list(Path(path).iterdir())
+def afficher(files, path , selected_item , message):
 
     clear_screen()
     print('chemin : ' + path)
@@ -41,16 +39,17 @@ def afficher(path , selected_item , message):
             print(f"    {item.name:<30} {file_type:<10} {size:<10} {mod_date}")
 
     print("=" * 75)
+    print('Appuyez sur la fleche du haut et celle du bas pour vous deplacer dans un dossier')
+    print('Appuyez entrer pour entrer dans un dossier')
     print('Appuyez shift + C pour copier')
     print('Appuyez shift + V pour coller')
     print('Appuyez shift + X puis deplacez vous dans le dossier cible et appuyer shift + V pour déplacer')
     print('Appuyez shift + R pour renomer')
-    print('Appuyez shift + D pour supprimer')
+    print('Appuyez shift + K pour trié par type')
+    print('Appuyez shift + T pour trié par date')
+    print('Appuyez shift + S pour trié par taille')
     print('='*75)
     print(message)
-
-    return files
-
 
 
 
