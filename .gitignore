@@ -9,4 +9,7 @@ __pycache__/
 *.pyc
 *.pyo
 
-Explorer/Main.spec
+Explorer/build
+Explorer/dist
+Explorer/*.spec
+
