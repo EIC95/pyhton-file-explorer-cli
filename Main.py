@@ -23,3 +23,4 @@ except Exception as e:
 
 print("Le programme va s'éteindre dans 1 minute...")
 time.sleep(60)  # Pause de 60 secondes avant la fermeture
+

@@ -1,7 +1,6 @@
 # Importation des modules nécessaires
 import shutil  # Pour la manipulation des fichiers et dossiers (copie, suppression, déplacement)
 import os  # Pour la gestion des chemins et opérations sur les fichiers
-import ctypes  # Pour afficher des boîtes de dialogue système (Windows uniquement)
 from pathlib import Path  # Pour la gestion des chemins de fichiers et dossiers
 
 def paste(path, destination, action):
@@ -37,6 +36,14 @@ def paste(path, destination, action):
     except Exception as e:
         return f"Erreur inattendue : {e}"
 
+def confirm_deletion(path):
+    """Demande confirmation à l'utilisateur avant suppression."""
+    try:
+        response = input(f"Supprimer {path} ? (o/n) ").strip().lower()
+        return response == 'o'
+    except KeyboardInterrupt:
+        print("\nOpération annulée.")
+
 def delete(path):
     """
     Supprime un fichier ou un dossier après confirmation de l'utilisateur.
@@ -48,13 +55,18 @@ def delete(path):
         str: Message indiquant le succès ou l'échec de l'opération.
     """
     try:
-        if not os.path.exists(path):
+        path = Path(path)
+        if not path.exists():
             raise FileNotFoundError(f"Le fichier ou dossier '{path}' n'existe pas.")
 
-        # Boîte de confirmation Windows (1 = OK, 2 = Annuler)
-        if ctypes.windll.user32.MessageBoxW(0, f"Supprimer {path} ?", "Confirmation", 1) == 1:
-            shutil.rmtree(path) if os.path.isdir(path) else os.remove(path)
+        if confirm_deletion(path):
+            if path.is_dir():
+                shutil.rmtree(path)
+            else:
+                path.unlink()
             return 'Supprimé'
+        else:
+            return "Suppression annulée."
 
     except FileNotFoundError as e:
         return f"Erreur : {e}"
