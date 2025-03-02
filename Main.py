@@ -1,19 +1,33 @@
 import time
+import platform
 
 try:
-    # Importation de la fonction principale de navigation depuis le module Explorer.navigations
+    # Importation de la fonction principale de navigation
     from Explorer.navigations import naviguer
 except ModuleNotFoundError:
     print("Erreur : Le module 'Explorer.navigations' est introuvable. Vérifiez que le fichier existe et que le chemin est correct.")
     print("Le programme va s'éteindre dans 1 minute...")
-    time.sleep(60)  # Pause de 60 secondes avant la fermeture
-    exit(1)  # Quitte avec un code d'erreur
+    time.sleep(60)
+    exit(1)
+
+# Déterminer le chemin de départ en fonction du système d'exploitation
+systeme = platform.system()
+
+if systeme == "Windows":
+    chemin_depart = "C:\\"
+elif systeme == "Darwin":  # macOS
+    chemin_depart = "/Users"
+elif systeme == "Linux":
+    chemin_depart = "/home"
+else:
+    print(f"Erreur : Système d'exploitation non reconnu ({systeme}).")
+    print("Le programme va s'éteindre dans 1 minute...")
+    time.sleep(60)
+    exit(1)
 
 try:
-    # Appel de la fonction naviguer avec le chemin de départ 'C:/'
-    # Ce chemin représente le point d'entrée de l'explorateur de fichiers.
-    # Il peut être modifié pour démarrer la navigation depuis un autre répertoire.
-    naviguer('C:/')
+    # Démarrer la navigation depuis le chemin détecté
+    naviguer(chemin_depart)
 except FileNotFoundError as e:
     print(f"Erreur : Le chemin spécifié est introuvable. Détails : {e}")
 except PermissionError:
@@ -22,5 +36,4 @@ except Exception as e:
     print(f"Erreur inattendue : {e}")
 
 print("Le programme va s'éteindre dans 1 minute...")
-time.sleep(60)  # Pause de 60 secondes avant la fermeture
-
+time.sleep(60)
