@@ -4,8 +4,9 @@ from Explorer.interface import afficher
 import keyboard
 # Importation des fonctions d'actions pour gérer les fichiers (suppression, renommage, copie, etc.)
 from Explorer.actions import *
-# Importation du module time pour gérer certaines pauses dans l'exécution
+# Importation du module time et sys pour gérer certaines pauses dans l'exécution et la fermeture de l'application
 import time
+import sys
 # Importation du module Path depuis pathlib pour la manipulation des chemins de fichiers
 from pathlib import Path
 
@@ -50,7 +51,8 @@ def naviguer(path):
                 selected_index = 0
 
             # Lecture d'un événement clavier (attente d'une touche)
-            key = keyboard.read_event().name  
+            time.sleep(0.1)  # Pause pour éviter la détection multiple
+            key = keyboard.read_key()
 
             # Navigation dans la liste des fichiers avec les flèches
             if key == "up" and selected_index > 0:
@@ -76,14 +78,15 @@ def naviguer(path):
             # Gestion des actions avec la touche "Shift" combinée à une autre touche
             elif key == 'shift' and files:
                 time.sleep(0.2)  # Pause pour éviter la détection multiple
-                combi = keyboard.read_event().name  # Lire la touche combinée
+                combi = keyboard.read_key()  # Lire la touche combinée
 
                 if combi == "d":  # Suppression d'un fichier/dossier
+                    time.sleep(0.5)  # Petite pause pour éviter un double appel
                     message = delete(files[selected_index])
                     files = list(Path(path).iterdir())  # Mettre à jour la liste
 
                 elif combi == 'r':  # Renommage d'un fichier/dossier
-                    time.sleep(0.1)  # Petite pause pour éviter un double appel
+                    time.sleep(0.5)  # Petite pause pour éviter un double appel
                     message = rename(files[selected_index])
                     files = list(Path(path).iterdir())  # Mettre à jour la liste
 
@@ -103,6 +106,7 @@ def naviguer(path):
 
                 elif combi == 'x':  # Couper un fichier/dossier (déplacement)
                     copy = str(files[selected_index])
+                    print(copy)
                     message = 'Coupé'
                     action = 'move'
 
@@ -115,6 +119,8 @@ def naviguer(path):
 
                 elif combi == 't':  # Trier par date de modification
                     files, message = sort_by_date(path)
+                elif combi == 'esc':
+                    sys.exit(0)
 
         except Exception as e:
             # Gestion des erreurs

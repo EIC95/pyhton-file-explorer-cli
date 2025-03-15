@@ -1,6 +1,6 @@
 # Importation des modules nécessaires
 import datetime  # Pour la gestion des dates et la conversion des timestamps
-import os  # Pour la gestion du terminal (effacer l'écran, vérifier le système d'exploitation)
+import os , platform  # Pour la gestion du terminal (effacer l'écran, vérifier le système d'exploitation)
 from pathlib import Path  # Pour la gestion des chemins de fichiers et dossiers
 
 def format_size(size_in_bytes):
@@ -42,10 +42,7 @@ def clear_screen():
     Efface l'écran du terminal en fonction du système d'exploitation.
     """
     try:
-        if os.name == "nt":  # Windows
-            os.system("cls")
-        else:  # Linux / MacOS
-            os.system("clear")
+        os.system("cls" if platform.system() == "Windows" else "clear")
     except Exception as e:
         print(f"Erreur lors de l'effacement de l'écran : {e}")
 
@@ -103,6 +100,7 @@ def afficher(files, path, selected_item, message):
         # Instructions pour l'utilisateur
         print('Appuyez sur la flèche du haut et celle du bas pour vous déplacer dans un dossier')
         print('Appuyez sur Entrée pour entrer dans un dossier')
+        print('Appuyez sur Echap pour quitter un dossier')
         print('Appuyez sur Shift + C pour copier')
         print('Appuyez sur Shift + V pour coller')
         print('Appuyez sur Shift + X puis déplacez-vous dans le dossier cible et appuyez sur Shift + V pour déplacer')
@@ -110,6 +108,7 @@ def afficher(files, path, selected_item, message):
         print('Appuyez sur Shift + K pour trier par type')
         print('Appuyez sur Shift + T pour trier par date')
         print('Appuyez sur Shift + S pour trier par taille')
+        print("Appuyez sur Shift + Echap pour quitter l'application")
 
         print('=' * 75)
 
