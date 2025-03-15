@@ -14,11 +14,11 @@ except ModuleNotFoundError:
 systeme = platform.system()
 
 if systeme == "Windows":
-    chemin_depart = "C:\\"
+    path = "C:\\"
 elif systeme == "Darwin":  # macOS
-    chemin_depart = "/Users"
+    path = "/Users"
 elif systeme == "Linux":
-    chemin_depart = "/home"
+    path = "/home"
 else:
     print(f"Erreur : Système d'exploitation non reconnu ({systeme}).")
     print("Le programme va s'éteindre dans 1 minute...")
@@ -27,7 +27,7 @@ else:
 
 try:
     # Démarrer la navigation depuis le chemin détecté
-    naviguer(chemin_depart)
+    naviguer(path)
 except FileNotFoundError as e:
     print(f"Erreur : Le chemin spécifié est introuvable. Détails : {e}")
 except PermissionError:
