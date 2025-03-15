@@ -1,14 +1,10 @@
 # Environnement virtuel
 .venv/
 
-# Fichiers de configuration PyCharm
-.idea/
-
 # Cache Python et fichiers compilés
 __pycache__/
 *.pyc
 *.pyo
 
-build
-
+# Fichiers du projet a rendre a professeur
 /Project_files
