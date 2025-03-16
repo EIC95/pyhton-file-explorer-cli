@@ -1,10 +1,15 @@
-# Environnement virtuel
+# virtual environment
 .venv/
 
-# Cache Python et fichiers compilés
+# python cache
 __pycache__/
 *.pyc
 *.pyo
 
-# Fichiers du projet a rendre a professeur
+# exe
+*.spec
+dist/
+build/
+
+# Project files
 /Project_files
