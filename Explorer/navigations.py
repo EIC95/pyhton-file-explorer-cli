@@ -52,7 +52,7 @@ def naviguer(path):
 
             # Lecture d'un événement clavier (attente d'une touche)
             time.sleep(0.1)  # Pause pour éviter la détection multiple
-            event = keyboard.read_key().lower()
+            key = keyboard.read_key().lower()
 
             # Navigation dans la liste des fichiers avec les flèches
             if key == "up" and selected_index > 0:
