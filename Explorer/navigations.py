@@ -78,7 +78,7 @@ def naviguer(path):
             # Gestion des actions avec la touche "Shift" combinée à une autre touche
             elif key == 'shift' and files:
                 time.sleep(0.2)  # Pause pour éviter la détection multiple
-                combi = keyboard.read_key()  # Lire la touche combinée
+                combi = keyboard.read_key().lower()
 
                 if combi == "d":  # Suppression d'un fichier/dossier
                     time.sleep(0.5)  # Petite pause pour éviter un double appel
